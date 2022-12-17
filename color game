@@ -1,0 +1,108 @@
+import tkinter
+import random
+import os
+from tkinter import *
+
+# list
+colors = ['Red', 'Blue', 'Green', 'Pink', 'Black',
+          'Yellow', 'Orange', 'White', 'Purple', 'Brown']
+score = 0
+
+# time left.
+timeleft = 60
+
+
+def reset():
+    root.destroy()
+    os.system("Colors.py")
+
+
+# start the game.
+def startGame(event):
+    if timeleft == 60:
+        # start timer.
+        countdown()
+
+    nextColor()
+
+
+def nextColor():
+    global score
+    global timeleft
+
+    if timeleft > 0:
+
+        e.focus_set()
+
+        if e.get().lower() == colors[1].lower():
+            score += 1
+
+        e.delete(0, tkinter.END)
+
+        random.shuffle(colors)
+
+        label.config(fg=str(colors[1]), text=str(colors[0]))
+
+        scoreLabel.config(text="Score: " + str(score))
+
+
+# Countdown
+def countdown():
+    global timeleft
+
+    if timeleft > 0:
+        timeleft -= 1
+
+        # update
+        timeLabel.config(text="Time remaining: "
+                              + str(timeleft))
+
+        # run the function.
+        timeLabel.after(1000, countdown)
+
+
+root = tkinter.Tk()
+
+root.title("Color Game")
+
+root.geometry("385x240")
+
+root.resizable(False, False)
+
+# add an instructions label
+instructions = tkinter.Label(root, text="Type in the color "
+                                        "of the words, not the word text!",
+                             font=('Helvetica', 12))
+instructions.pack()
+
+# add a score label
+scoreLabel = tkinter.Label(root, text="Press enter to start",
+                           font=('Helvetica', 12))
+scoreLabel.pack()
+
+# add a time left label
+timeLabel = tkinter.Label(root, text="Time left: " +
+                                     str(timeleft), font=('Helvetica', 12))
+
+timeLabel.pack()
+
+# add a label for displaying the colours
+label = tkinter.Label(root, font=('Helvetica', 60))
+label.pack()
+
+# add a text entry box for
+# typing in colours
+e = tkinter.Entry(root)
+
+# run the 'startGame' function
+# when the enter key is pressed
+root.bind('<Return>', startGame)
+e.pack()
+
+btn1 = Button(root, text="reset", bd=5, bg="#35c4c2", font=5, fg="black", command=reset)
+btn1.pack()
+# set focus on the entry box
+e.focus_set()
+
+# start the GUI
+root.mainloop()
