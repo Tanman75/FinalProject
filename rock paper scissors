@@ -1,0 +1,88 @@
+from tkinter import *
+import tkinter.font as font
+import random
+from PIL import Image, ImageTk
+
+playerScore = 0
+computer_score = 0
+options = [('Rock', 0), ('Paper', 1), ('Scissors', 2)]
+
+
+def playerC(player_input):
+    global playerScore, computer_score
+
+    computer_in = get_computer_choice()
+
+    player_choice_label.config(text='You picked : ' + player_input[0])
+    computer_choice_label.config(text='Computer picked : ' + computer_in[0])
+
+    if player_input == computer_in:
+        winner_label.config(text="Tie", fg="grey")
+    elif (player_input[1] - computer_in[1]) % 3 == 1:
+        playerScore += 1
+        winner_label.config(text="You Won!", fg="green")
+        player_score_label.config(text='Your Score is : ' + str(playerScore))
+    else:
+        computer_score += 1
+        winner_label.config(text=" The Computer Won!", fg="red")
+        computer_score_label.config(text='Computer score is : ' + str(computer_score))
+
+
+def get_computer_choice():
+    return random.choice(options)
+
+
+RPS_window = Tk()
+RPS_window.title("Rock Paper Scissors")
+
+RPS_font = font.Font(family="Times New Roman", size=12)
+
+game_title = Label(text='Rock Paper Scissors', font=font.Font(size=20), fg='black')
+game_title.pack()
+
+winner_label = Label(text="Lets play Rock, Paper, Scissors!", fg='green', font=font.Font(size=13), pady=8)
+winner_label.pack()
+
+input_frame = Frame(RPS_window)
+input_frame.pack()
+
+canvas = Canvas(RPS_window, width=350, height=350)
+canvas.pack()
+
+img1 = ImageTk.PhotoImage(Image.open('RPS_game.jpg'))
+
+canvas.create_image(150, 150, anchor=CENTER, image=img1)
+
+
+player_options = Label(input_frame, text="Choose your weapon : ", font=RPS_font, fg='black')
+player_options.grid(row=0, column=0, pady=8)
+
+rock_btn = Button(input_frame, text='Rock', width=15, bd=0, bg='light grey', pady=5,
+                  command=lambda: playerC(options[0]))
+rock_btn.grid(row=0, column=1, padx=5, pady=5)
+
+paper_btn = Button(input_frame, text='Paper', width=15, bd=0, bg='white', pady=5,
+                   command=lambda: playerC(options[1]))
+paper_btn.grid(row=0, column=2, padx=5, pady=5)
+
+scissors_btn = Button(input_frame, text='Scissors', width=15, bd=0, bg='sky blue', pady=5,
+                      command=lambda: playerC(options[2]))
+scissors_btn.grid(row=0, column=3, padx=5, pady=5)
+
+score_label = Label(input_frame, text='The Score : ', font=RPS_font, fg='black')
+score_label.grid(row=2, column=0)
+
+player_choice_label = Label(input_frame, text='You Picked : -', font=RPS_font)
+player_choice_label.grid(row=3, column=1, pady=5)
+
+player_score_label = Label(input_frame, text='Your Score is : -', font=RPS_font)
+player_score_label.grid(row=3, column=2, pady=5)
+
+computer_choice_label = Label(input_frame, text='Computer picked : -', font=RPS_font, fg='black')
+computer_choice_label.grid(row=4, column=1, pady=5)
+
+computer_score_label = Label(input_frame, text='Computer Score is : -', font=RPS_font, fg='black')
+computer_score_label.grid(row=4, column=2, padx=(10, 0), pady=5)
+
+RPS_window.geometry('650x600')
+RPS_window.mainloop()
