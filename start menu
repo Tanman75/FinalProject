@@ -1,0 +1,41 @@
+import os
+from tkinter import *
+from tkinter import font
+
+StartMenu = Tk()
+StartMenu.title('Mini Games')
+StartMenu.geometry("245x200")
+StartMenu.resizable(False, False)
+
+MenuFont = font.Font(family="Times New Roman", size=14)
+
+
+def runRPS():
+    os.system('RPS.py')
+
+
+def runTicTac():
+    os.system('TicTac.py')
+
+
+def runColor():
+    os.system('Colors.py')
+
+
+def CloseMenu():
+    StartMenu.destroy()
+
+
+btn1 = Button(StartMenu, text="Rock Paper Scissors Game", font=MenuFont, bd=4, bg="#35c4c2", fg="black", command=runRPS)
+btn1.grid(column=1, row=0)
+
+btn2 = Button(StartMenu, text="Tic Tac Toe Game", font=MenuFont, bd=4, bg="#35c4c2", fg="black", command=runTicTac)
+btn2.grid(column=1, row=1)
+
+bt3 = Button(StartMenu, text="Color word Game", font=MenuFont, bd=4, bg="#35c4c2", fg="black", command=runColor)
+bt3.grid(column=1, row=2)
+
+btnExit = Button(StartMenu, text="Exit", font=MenuFont, bd=4, bg="#f75966", fg="black", command=CloseMenu)
+btnExit.grid(column=1, row=3)
+
+StartMenu.mainloop()
